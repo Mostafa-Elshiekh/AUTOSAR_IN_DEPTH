@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 file:///E:/study/AUTOSAR_DIPLOMA/AUTOSAR_SCHEMA/AUTOSAR_00046.xsd">
+ 
+<AR-PACKAGES>
+   <AR-PACKAGES>
+      <SHORT-NAME>Interfaces_Lidar</SHORT-NAME>
+      <ELEMENTS>
+         
+         <SENDER-RECEIVER-INTERFACE>
+            <SHORT-NAME>SenderReceiverInterface_Lidar</SHORT-NAME>
+
+               <DATA-ELEMENTS>
+                  <VARIABLE-DATA-PROTOTYPE>
+                      <SHORT-NAME>LidarDistanceValue</SHORT-NAME>
+                      <TYPE-TREF DEST="IMPLEMENTATION-DATA-TYPE">AUTOSAR_PlatformTypes/ImplementationDataTypes/uint32</TYPE-TREF> 
+                      <INIT-VALUE>
+                        <NUMERICAL-VALUE-SPECIFICATION>
+                           <VALUE>12</VALUE>
+                        </NUMERICAL-VALUE-SPECIFICATION>
+                      </INIT-VALUE>
+                  </VARIABLE-DATA-PROTOTYPE>
+               </DATA-ELEMENTS>
+
+         </SENDER-RECEIVER-INTERFACE>
+
+         <SensorActuatorSwComponentType> <!--Sender Software Component-->
+            <SHORT-NAME>SWC1_LidarSensor</SHORT-NAME>
+            <PORTS>
+               <P-PORT-PROTOTYPE>
+                  <SHORT-NAME>ProvidePort</SHORT-NAME>
+                  <PROVIDED-INTERFACE-TREF DEST="SenderReceiverInterface">/Interfaces_Lidar/SenderReceiverInterface_Lidar</PROVIDED-INTERFACE-TREF>
+               </P-PORT-PROTOTYPE>
+            </PORTS>
+         </APPLICATION-SW-COMPONENT-TYPE>
+
+
+         <APPLICATION-SW-COMPONENT-TYPE> <!--Receiver Software Component-->
+            <SHORT-NAME>SWC2_LidarAlgo</SHORT-NAME>
+            <PORTS>
+               <R-PORT-PROTOTYPE>
+                  <SHORT-NAME>RequsterPort</SHORT-NAME>
+                  <REQUIRED-INTERFACE-TREF DEST="SenderReceiverInterface">/Interfaces_Lidar/SenderReceiverInterface_Lidar</REQUIRED-INTERFACE-TREF>
+               </R-PORT-PROTOTYPE>
+            </PORTS>
+         </APPLICATION-SW-COMPONENT-TYPE>
+
+
+      </ELEMENTS>
+   </AR-PACKAGES>
+</AUTOSAR>
