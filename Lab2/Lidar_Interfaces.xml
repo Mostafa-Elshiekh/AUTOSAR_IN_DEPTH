@@ -6,16 +6,16 @@
       <SHORT-NAME>Interfaces_Lidar</SHORT-NAME>
       <ELEMENTS>
          
-         <SENDER-RECEIVER-INTERFACE>
-            <SHORT-NAME>SenderReceiverInterface_Lidar</SHORT-NAME>
+         <SENDER-RECEIVER-INTERFACE> <!--Interface-->
+            <SHORT-NAME>SenderReceiverInterfaceLidarData</SHORT-NAME> 
 
-               <DATA-ELEMENTS>
+               <DATA-ELEMENTS>       <!--Data-->
                   <VARIABLE-DATA-PROTOTYPE>
                       <SHORT-NAME>LidarDistanceValue</SHORT-NAME>
                       <TYPE-TREF DEST="IMPLEMENTATION-DATA-TYPE">AUTOSAR_PlatformTypes/ImplementationDataTypes/uint32</TYPE-TREF> 
                       <INIT-VALUE>
                         <NUMERICAL-VALUE-SPECIFICATION>
-                           <VALUE>12</VALUE>
+                           <VALUE>0</VALUE>
                         </NUMERICAL-VALUE-SPECIFICATION>
                       </INIT-VALUE>
                   </VARIABLE-DATA-PROTOTYPE>
@@ -23,15 +23,18 @@
 
          </SENDER-RECEIVER-INTERFACE>
 
-         <SensorActuatorSwComponentType> <!--Sender Software Component-->
+
+
+         <SENSOR-ACTUATOR-SW-COMPONENT-TYPE> <!--Sender Software Component-->
             <SHORT-NAME>SWC1_LidarSensor</SHORT-NAME>
             <PORTS>
                <P-PORT-PROTOTYPE>
                   <SHORT-NAME>ProvidePort</SHORT-NAME>
-                  <PROVIDED-INTERFACE-TREF DEST="SenderReceiverInterface">/Interfaces_Lidar/SenderReceiverInterface_Lidar</PROVIDED-INTERFACE-TREF>
+                  <PROVIDED-INTERFACE-TREF DEST="SenderReceiverInterface">/Interfaces_Lidar/SenderReceiverInterfaceLidarData</PROVIDED-INTERFACE-TREF>
                </P-PORT-PROTOTYPE>
             </PORTS>
-         </APPLICATION-SW-COMPONENT-TYPE>
+         </SENSOR-ACTUATOR-SW-COMPONENT-TYPE>
+
 
 
          <APPLICATION-SW-COMPONENT-TYPE> <!--Receiver Software Component-->
@@ -39,11 +42,10 @@
             <PORTS>
                <R-PORT-PROTOTYPE>
                   <SHORT-NAME>RequsterPort</SHORT-NAME>
-                  <REQUIRED-INTERFACE-TREF DEST="SenderReceiverInterface">/Interfaces_Lidar/SenderReceiverInterface_Lidar</REQUIRED-INTERFACE-TREF>
+                  <REQUIRED-INTERFACE-TREF DEST="SenderReceiverInterface">/Interfaces_Lidar/SenderReceiverInterfaceLidarData</REQUIRED-INTERFACE-TREF>
                </R-PORT-PROTOTYPE>
             </PORTS>
          </APPLICATION-SW-COMPONENT-TYPE>
-
 
       </ELEMENTS>
    </AR-PACKAGES>

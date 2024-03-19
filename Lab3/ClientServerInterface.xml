@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 file:///E:/study/AUTOSAR_DIPLOMA/AUTOSAR_SCHEMA/AUTOSAR_00046.xsd">
+ 
+<AR-PACKAGES>
+   <AR-PACKAGES>
+      <SHORT-NAME>ClientServerInterfaceSumOp</SHORT-NAME>
+      <ELEMENTS>
+
+         <CLIENT-SERVER-INTERFACE>
+
+            <SHORT-NAME>CSInterface</SHORT-NAME>
+
+            <OPERATIONS>
+               <CLIENT-SERVER-OPERATION>
+                  <SHORT-NAME>SUM_Operation</SHORT-NAME>
+
+                  <ARGUMENTS>
+                     <ARGUMENT-DATA-PROTOTYPE>
+                        <SHORT-NAME>NUM1_in</SHORT-NAME>
+                        <TYPE-TREF DEST="IMPLEMENTATION-DATA-TYPE">/AUTOSAR_PlatformTypes/ImplementationDataTypes/uint16</TYPE-TREF>
+                        <DIRECTION>IN</DIRECTION>
+                     </ARGUMENT-DATA-PROTOTYPE>
+
+                     <ARGUMENT-DATA-PROTOTYPE>
+                        <SHORT-NAME>NUM2_in</SHORT-NAME>
+                        <TYPE-TREF DEST="IMPLEMENTATION-DATA-TYPE">/AUTOSAR_PlatformTypes/ImplementationDataTypes/uint16</TYPE-TREF>
+                        <DIRECTION>IN</DIRECTION>
+                     </ARGUMENT-DATA-PROTOTYPE>
+
+                     <ARGUMENT-DATA-PROTOTYPE>
+                        <SHORT-NAME>SummationVal_out</SHORT-NAME> 
+                         <TYPE-TREF DEST="IMPLEMENTATION-DATA-TYPE">/AUTOSAR_PlatformTypes/ImplementationDataTypes/uint32</TYPE-TREF>
+                        <DIRECTION>OUT</DIRECTION>
+                     </ARGUMENT-DATA-PROTOTYPE>
+                  </ARGUMENTS>
+
+               </CLIENT-SERVER-OPERATION>
+            </OPERATIONS>
+
+         </CLIENT-SERVER-INTERFACE>
+
+
+       <APPLICATION-SW-COMPONENT-TYPE>
+         <SHORT-NAME>SWC1_Server</SHORT-NAME>
+         <PORTS>
+            <P-PORT-PROTOTYPE>
+               <SHORT-NAME>ProvidePort_ClientServer_SUM_Operation</SHORT-NAME>
+               <CLIENT-SERVER-ANNOTATIONS>
+                  <CLIENT-SERVER-ANNOTATIONS>
+                     <OPERATION-REF DEST="clientServerOperation">/ClientServerInterfaceSumOp/CSInterface/SUM_Operation</OPERATION-REF>
+                  </CLIENT-SERVER-ANNOTATIONS>
+               </CLIENT-SERVER-ANNOTATIONS>
+            </P-PORT-PROTOTYPE>
+         </PORTS>
+       </APPLICATION-SW-COMPONENT-TYPE>
+
+
+       <APPLICATION-SW-COMPONENT-TYPE>
+         <SHORT-NAME>SWC2_Client</SHORT-NAME>
+         <PORTS>
+            <R-PORT-PROTOTYPE>
+               <SHORT-NAME>RequeredPort_ClientServer_SUM_Operation</SHORT-NAME>
+               <CLIENT-SERVER-ANNOTATIONS>
+                  <CLIENT-SERVER-ANNOTATIONS>
+                     <OPERATION-REF DEST="clientServerOperation">/ClientServerInterfaceSumOp/CSInterface/SUM_Operation</OPERATION-REF>
+                  </CLIENT-SERVER-ANNOTATIONS>
+               </CLIENT-SERVER-ANNOTATIONS>
+            </R-PORT-PROTOTYPE>
+         </PORTS>
+       </APPLICATION-SW-COMPONENT-TYPE>
+
+
+      </ELEMENTS>
+   </AR-PACKAGES>
+</AUTOSAR>
+
+
