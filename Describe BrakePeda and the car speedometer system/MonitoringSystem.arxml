@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 file:///E:/study/AUTOSAR_DIPLOMA/AUTOSAR_SCHEMA/AUTOSAR_00046.xsd">
+ 
+<AR-PACKAGES>
+   <AR-PACKAGES>
+      <SHORT-NAME>MonitoringSystem</SHORT-NAME>
+      <ELEMENTS>
+         
+                      <!--Interfaces-->
+         <!--Interface1 BrakePedal Val-->
+         <SENDER-RECEIVER-INTERFACE> 
+            <SHORT-NAME>SenderReceiverInterfaceBrakePedalVal</SHORT-NAME> 
+               <DATA-ELEMENTS>       <!--Data-->
+                  <VARIABLE-DATA-PROTOTYPE>
+                      <SHORT-NAME>BrakePedalValue</SHORT-NAME>
+                      <TYPE-TREF DEST="IMPLEMENTATION-DATA-TYPE">AUTOSAR_PlatformTypes/ImplementationDataTypes/uint32</TYPE-TREF> 
+                  </VARIABLE-DATA-PROTOTYPE>
+               </DATA-ELEMENTS>
+         </SENDER-RECEIVER-INTERFACE>
+
+
+         <!--Interface2 Speed Val-->
+         <SENDER-RECEIVER-INTERFACE> 
+         <SHORT-NAME>SenderReceiverInterfaceSpeedVal</SHORT-NAME> 
+            <DATA-ELEMENTS>       <!--Data-->
+               <VARIABLE-DATA-PROTOTYPE>
+                   <SHORT-NAME>SpeedVal</SHORT-NAME>
+                   <TYPE-TREF DEST="IMPLEMENTATION-DATA-TYPE">AUTOSAR_PlatformTypes/ImplementationDataTypes/uint32</TYPE-TREF> 
+               </VARIABLE-DATA-PROTOTYPE>
+            </DATA-ELEMENTS>
+         </SENDER-RECEIVER-INTERFACE>
+
+
+
+                   <!--SWCs--> 
+          <!--SWC1 Speed Calcuation --> 
+         <APPLICATION-SW-COMPONENT-TYPE> 
+            <SHORT-NAME>SWC1_CalcSpeed</SHORT-NAME>
+            <PORTS>
+               <!--Required BrakePedalVal-->
+               <R-PORT-PROTOTYPE>
+                  <SHORT-NAME>RequsterPortBrakePedalVal</SHORT-NAME>
+                  <REQUIRED-INTERFACE-TREF DEST="SenderReceiverInterface">/MonitoringSystem/SenderReceiverInterfaceBrakePedalVal</REQUIRED-INTERFACE-TREF>
+               </R-PORT-PROTOTYPE>
+               
+               <!--Provide SpeedVal -->
+               <P-PORT-PROTOTYPE>
+                  <SHORT-NAME>ProvidePortSpeedVal</SHORT-NAME>
+                  <PROVIDED-INTERFACE-TREF DEST="SenderReceiverInterface">/MonitoringSystem/SenderReceiverInterfaceSpeedVal</PROVIDED-INTERFACE-TREF>
+               </P-PORT-PROTOTYPE>
+            </PORTS>
+         </APPLICATION-SW-COMPONENT-TYPE>
+
+
+         <!--SWC2 BrakePedal Reading-->
+         <SENSOR-ACTUATOR-SW-COMPONENT-TYPE> 
+            <SHORT-NAME>SWC2_BrakePedal</SHORT-NAME>
+            <PORTS>
+               <!-- Provide BrakePedalVal -->
+               <P-PORT-PROTOTYPE>
+                  <SHORT-NAME>ProvidePortBrakePedalVal</SHORT-NAME>
+                  <PROVIDED-INTERFACE-TREF DEST="SenderReceiverInterface">/MonitoringSystem/SenderReceiverInterfaceBrakePedalVal</PROVIDED-INTERFACE-TREF>
+               </P-PORT-PROTOTYPE>
+            </PORTS>
+         </SENSOR-ACTUATOR-SW-COMPONENT-TYPE>
+
+
+         <!--SWC3 Dispaly Speed Value-->
+         <SENSOR-ACTUATOR-SW-COMPONENT-TYPE> 
+         <SHORT-NAME>SWC3_DisplaySpeed</SHORT-NAME>
+         <PORTS>
+            <R-PORT-PROTOTYPE>
+               <SHORT-NAME>ReqPort</SHORT-NAME>
+               <REQUIRED-INTERFACE-TREF DEST="SenderReceiverInterface">/MonitoringSystem/SenderReceiverInterfaceSpeedVal</REQUIRED-INTERFACE-TREF>
+            <R-PORT-PROTOTYPE>
+         </PORTS>
+      </SENSOR-ACTUATOR-SW-COMPONENT-TYPE>
+
+
+      </ELEMENTS>
+   </AR-PACKAGES>
+</AUTOSAR>
+
+
