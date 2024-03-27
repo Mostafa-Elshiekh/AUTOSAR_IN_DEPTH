@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+   xsi:schemaLocation="http://autosar.org/schema/r4.0 file:///E:/study/AUTOSAR_DIPLOMA/AUTOSAR_SCHEMA/
+   AUTOSAR_00046.xsd">
+ 
+ 
+<AR-PACKAGES>
+   <AR-PACKAGES>
+      <SHORT-NAME>ThrottleControle</SHORT-NAME>
+      <ELEMENTS>
+
+      <!--Interface Throttle Command-->
+      <SENDER-RECEIVER-INTERFACE> 
+         <SHORT-NAME>SendRecInter_ThrottleCommand</SHORT-NAME> 
+            <DATA-ELEMENTS>       <!--Data-->
+               <VARIABLE-DATA-PROTOTYPE>
+                   <SHORT-NAME>ThrottleCommand</SHORT-NAME> 
+                   <TYPE-TREF DEST="IMPLEMENTATION-DATA-TYPE">AUTOSAR_PlatformTypes/ImplementationDataTypes
+                     /uint32</TYPE-TREF> 
+               </VARIABLE-DATA-PROTOTYPE>
+            </DATA-ELEMENTS>
+      </SENDER-RECEIVER-INTERFACE>
+
+
+         <!--SWC1 Throttle Controle Algo-->
+         <APPLICATION-SW-COMPONENT-TYPE>
+            <SHORT-NAME>SWC1_ThrottleControleAlgo</SHORT-NAME>
+
+            <PORTS>
+               <P-PORT-PROTOTYPE>
+                  <SHORT-NAME>ProvidePort_ThrottleCommand</SHORT-NAME>
+                  <PROVIDED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/ThrottleControle
+                     /SendRecInter_ThrottleCommand</PROVIDED-INTERFACE-TREF>
+               </P-PORT-PROTOTYPE>
+            </PORTS>
+
+            <INTERNAL-BEHAVIORS>
+                  <SWC-INTERNAL-BEHAVIOR>
+                        <SHORT-NAME>Beh_ThrottleControler</SHORT-NAME>
+                        <RUNNABLE-ENTITY>
+                              <SHORT-NAME>Run_SetThrottleCMD</SHORT-NAME>
+                              <SYMBOL>Run_SetThrottleCMD</SYMBOL>
+                              <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                              <CAN-BE-INVOKED-CONCURRENTLY>flase</CAN-BE-INVOKED-CONCURRENTLY>
+                              <DATA-WRITE-ACCESSS>
+                                    <SHORT-NAME>ThrottleCMD</SHORT-NAME>
+                                          <ACCESSED-VARIABLE>
+                                             <!--Determine the PORT which you access it & Determine the data wihch it inside this port-->
+                                             <AUTOSAR-VARIABLE-IREF>
+                                                   <PORT-PROTOTYPE-REF DEST ="P-PORT-PROTOTYPE">/SWC1_ThrottleControleAlgo/
+                                                      ProvidePort_ThrottleCommand</PORT-PROTOTYPE-REF>
+                                                   <TARGET-DATA-PROTOTYPE-REF DEST="VariableDataPrototype">/SendRecInter_ThrottleCommand/
+                                                      ThrottleCommand</TARGET-DATA-PROTOTYPE-REF>
+                                             </AUTOSAR-VARIABLE-IREF> 
+                                         </ACCESSED-VARIABLE>
+                             </DATA-WRITE-ACCESSS>
+                        </RUNNABLE-ENTITY>
+                  </SWC-INTERNAL-BEHAVIOR>
+            </INTERNAL-BEHAVIORS>
+         </APPLICATION-SW-COMPONENT-TYPE>
+         <!--SWC1 End-->
+
+
+         <!--SWC2 Throttle Controler-->
+         <SENSOR-ACTUATOR-SW-COMPONENT-TYPE>
+            <SHORT-NAME>SWC2_ThrottleControler</SHORT-NAME>
+            <!--Requerd Port -->
+            <PORTS>
+               <R-PORT-PROTOTYPE>
+                  <SHORT-NAME>RequerdPort_ThrottleCommand</SHORT-NAME>
+                  <PROVIDED-REQUIRED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/ThrottleControle
+                     /SendRecInter_ThrottleCommand</PROVIDED-REQUIRED-INTERFACE-TREF>
+               </R-PORT-PROTOTYPE>
+            </PORTS>
+            <INTERNAL-BEHAVIORS>
+               <SWC-INTERNAL-BEHAVIOR>
+                   <SHORT-NAME>Beh_ThrottleSetCommand</SHORT-NAME>
+                   <RUNNABLE-ENTITY>
+                         <SHORT-NAME>Run_ThrottleSetCommand</SHORT-NAME>
+                         <SYMBOL>Run_ThrottleSetCommand</SYMBOL>
+                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                          <CAN-BE-INVOKED-CONCURRENTLY>flase</CAN-BE-INVOKED-CONCURRENTLY>
+                          <DATA-READ-ACCESSS>
+                                <SHORT-NAME>ThrottleCommand</SHORT-NAME>
+                                <ACCESSED-VARIABLE>
+                                 <!--Determine the PORT which you access it & Determine the data wihch it inside this port-->
+                                     <AUTOSAR-VARIABLE-IREF>
+                                          <RPORT-PROTOTYPE-REF DEST ="R-PORT-PROTOTYPE">/SWC2_ThrottleControler/
+                                             RequerdPort_ThrottleCommand</RPORT-PROTOTYPE-REF>>
+                                          <TARGET-DATA-PROTOTYPE-REF DEST="VariableDataPrototype">/SendRecInter_ThrottleCommand/
+                                             ThrottleCommand</TARGET-DATA-PROTOTYPE-REF>
+                                    </AUTOSAR-VARIABLE-IREF> 
+                                 </ACCESSED-VARIABLE>
+                          </DATA-READ-ACCESSS>
+                      </RUNNABLE-ENTITY>
+                  </SWC-INTERNAL-BEHAVIOR>
+            </INTERNAL-BEHAVIORS>
+         </SENSOR-ACTUATOR-SW-COMPONENT-TYPE>>
+         <!--SWC2 End-->
+
+   </ELEMENTS>
+   </AR-PACKAGES>
+</AUTOSAR>
+
