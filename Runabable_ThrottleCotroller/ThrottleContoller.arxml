@@ -35,8 +35,10 @@
             </PORTS>
 
             <INTERNAL-BEHAVIORS>
+
                   <SWC-INTERNAL-BEHAVIOR>
                         <SHORT-NAME>Beh_ThrottleControler</SHORT-NAME>
+                     <RUNNABLES>
                         <RUNNABLE-ENTITY>
                               <SHORT-NAME>Run_SetThrottleCMD</SHORT-NAME>
                               <SYMBOL>Run_SetThrottleCMD</SYMBOL>
@@ -56,9 +58,13 @@
                              </DATA-WRITE-ACCESSS>
                         </RUNNABLE-ENTITY>
                   </SWC-INTERNAL-BEHAVIOR>
+               </RUNNABLES>
             </INTERNAL-BEHAVIORS>
          </APPLICATION-SW-COMPONENT-TYPE>
          <!--SWC1 End-->
+
+
+
 
 
          <!--SWC2 Throttle Controler-->
@@ -75,28 +81,49 @@
             <INTERNAL-BEHAVIORS>
                <SWC-INTERNAL-BEHAVIOR>
                    <SHORT-NAME>Beh_ThrottleSetCommand</SHORT-NAME>
-                   <RUNNABLE-ENTITY>
-                         <SHORT-NAME>Run_ThrottleSetCommand</SHORT-NAME>
-                         <SYMBOL>Run_ThrottleSetCommand</SYMBOL>
-                          <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
-                          <CAN-BE-INVOKED-CONCURRENTLY>flase</CAN-BE-INVOKED-CONCURRENTLY>
-                          <DATA-READ-ACCESSS>
-                                <SHORT-NAME>ThrottleCommand</SHORT-NAME>
-                                <ACCESSED-VARIABLE>
-                                 <!--Determine the PORT which you access it & Determine the data wihch it inside this port-->
-                                     <AUTOSAR-VARIABLE-IREF>
-                                          <RPORT-PROTOTYPE-REF DEST ="R-PORT-PROTOTYPE">/SWC2_ThrottleControler/
-                                             RequerdPort_ThrottleCommand</RPORT-PROTOTYPE-REF>>
-                                          <TARGET-DATA-PROTOTYPE-REF DEST="VariableDataPrototype">/SendRecInter_ThrottleCommand/
-                                             ThrottleCommand</TARGET-DATA-PROTOTYPE-REF>
-                                    </AUTOSAR-VARIABLE-IREF> 
-                                 </ACCESSED-VARIABLE>
-                          </DATA-READ-ACCESSS>
-                      </RUNNABLE-ENTITY>
+
+
+                   <!-- When Run_ThrottleSetCommand run ? , it will run when SWC2 receives ThrottleCommand on the port-->
+                   <EVENTS>
+                        <DATA-RECEIVED-EVENT>
+                              <SHORT-NAME>Event_DataRecEvent</SHORT-NAME>
+                              <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/SWC2_ThrottleControler/Beh_ThrottleSetCommand
+                                 /Run_ThrottleSetCommand</START-ON-EVENT-REF>
+                              <DATA-IREF>
+                                    <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/SendRecInter_ThrottleCommand/                                            <TARGET-DATA-PROTOTYPE-REF DEST="VariableDataPrototype">/SendRecInter_ThrottleCommand/ThrottleCommand
+                                    ThrottleCommand</TARGET-DATA-PROTOTYPE-REF>
+                              </DATA-IREF>
+                        </DATA-RECEIVED-EVENT>
+                   </EVENTS>
+
+
+               <!--Define runnable to receives the ThrottleCommand to take a action on a Throttle-->
+               <RUNNABLES>
+                      <RUNNABLE-ENTITY>
+                            <SHORT-NAME>Run_ThrottleSetCommand</SHORT-NAME>
+                            <SYMBOL>Run_ThrottleSetCommand</SYMBOL>
+                             <MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+                             <CAN-BE-INVOKED-CONCURRENTLY>flase</CAN-BE-INVOKED-CONCURRENTLY>
+                             <DATA-READ-ACCESSS>
+                                   <SHORT-NAME>ThrottleCommand</SHORT-NAME>
+                                   <ACCESSED-VARIABLE>
+                                    <!--Determine the PORT which you access it & Determine the data wihch it inside this port-->
+                                        <AUTOSAR-VARIABLE-IREF>
+                                             <RPORT-PROTOTYPE-REF DEST ="R-PORT-PROTOTYPE">/SWC2_ThrottleControler/
+                                                RequerdPort_ThrottleCommand</RPORT-PROTOTYPE-REF>>
+                                               <TARGET-DATA-PROTOTYPE-REF DEST="VariableDataPrototype">/SendRecInter_ThrottleCommand/
+                                                ThrottleCommand</TARGET-DATA-PROTOTYPE-REF>
+                                       </AUTOSAR-VARIABLE-IREF> 
+                                    </ACCESSED-VARIABLE>
+                             </DATA-READ-ACCESSS>
+                         </RUNNABLE-ENTITY>
                   </SWC-INTERNAL-BEHAVIOR>
+               </RUNNABLES>
             </INTERNAL-BEHAVIORS>
          </SENSOR-ACTUATOR-SW-COMPONENT-TYPE>>
          <!--SWC2 End-->
+
+
 
    </ELEMENTS>
    </AR-PACKAGES>
