@@ -29,7 +29,7 @@
 
                      <ARGUMENT-DATA-PROTOTYPE>
                         <SHORT-NAME>SummationVal_out</SHORT-NAME> 
-                         <TYPE-TREF DEST="IMPLEMENTATION-DATA-TYPE">/AUTOSAR_PlatformTypes/ImplementationDataTypes/uint32</TYPE-TREF>
+                         <TYPE-TREF DEST="IMPLEMENTATION-ATDA-TYPE">/AUTOSAR_PlatformTypes/ImplementationDataTypes/uint32</TYPE-TREF>
                         <DIRECTION>OUT</DIRECTION>
                      </ARGUMENT-DATA-PROTOTYPE>
                   </ARGUMENTS>
