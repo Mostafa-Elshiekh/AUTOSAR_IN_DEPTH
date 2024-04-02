@@ -1,0 +1,5 @@
+main.c:29:6:MCU_HW_Init	16	static
+main.c:46:6:StartOs	16	static
+main.c:70:5:main	16	static
+main.c:99:6:Task_Run_ReadDoorSensor	16	static
+main.c:107:6:Task_Run_DoorLockAlgo	16	static

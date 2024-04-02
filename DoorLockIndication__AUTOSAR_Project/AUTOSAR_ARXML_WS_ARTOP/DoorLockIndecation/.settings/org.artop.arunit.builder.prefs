@@ -1,0 +1,7 @@
+allTypes=true
+c_rte=true
+c_rte.c_api_output_path=/rte_gen/files/rte_fils
+c_rte.c_rte_flat=true
+c_rte.c_rte_output_path=/rte_gen/files
+continueOnError=true
+eclipse.preferences.version=1

@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://autosar.org/schema/r4.0 AUTOSAR_00046.xsd">
+	<AR-PACKAGES>
+
+		<AR-PACKAGE>
+			<SHORT-NAME>Interfaces</SHORT-NAME>
+			<ELEMENTS>
+				<SENDER-RECEIVER-INTERFACE>
+					<SHORT-NAME>SendRecInterface_DoorState</SHORT-NAME>
+					<!--DoorState Data -->
+					<DATA-ELEMENTS>
+						<VARIABLE-DATA-PROTOTYPE>
+							<SHORT-NAME>DoorState</SHORT-NAME>
+							<TYPE-TREF DEST="IMPLEMENTATION-DATA-TYPE">AUTOSAR_PlatformTypes/ImplementationDataTypes/uint8</TYPE-TREF>
+						</VARIABLE-DATA-PROTOTYPE>
+					</DATA-ELEMENTS>
+				</SENDER-RECEIVER-INTERFACE>
+
+				<CLIENT-SERVER-INTERFACE>
+					<SHORT-NAME>ClServInterface_Led</SHORT-NAME>
+					<OPERATIONS>
+						<CLIENT-SERVER-OPERATION>
+							<SHORT-NAME>Led</SHORT-NAME>
+
+							<ARGUMENTS>
+								<ARGUMENT-DATA-PROTOTYPE>
+									<SHORT-NAME>LedState</SHORT-NAME>
+									<TYPE-TREF DEST="IMPLEMENTATION-DATA-TYPE">/AUTOSAR_PlatformTypes/ImplementationDataTypes/uint8</TYPE-TREF>
+									<DIRECTION>IN</DIRECTION>
+								</ARGUMENT-DATA-PROTOTYPE>
+							</ARGUMENTS>
+
+							<POSSIBLE-AP-ERROR-REFS>
+								<POSSIBLE-AP-ERROR-REF
+									DEST="AP-APPLICATION-ERROR">/Interfaces/ClServInterface_Led/ERROR_OK</POSSIBLE-AP-ERROR-REF>
+								<POSSIBLE-AP-ERROR-REF
+									DEST="AP-APPLICATION-ERROR">/Interfaces/ClServInterface_Led/ERROR_NOT_OK</POSSIBLE-AP-ERROR-REF>
+							</POSSIBLE-AP-ERROR-REFS>
+
+						</CLIENT-SERVER-OPERATION>
+					</OPERATIONS>
+
+					<!-- Define ERROR to can make a return -->
+					<POSSIBLE-ERRORS>
+						<APPLICATION-ERROR>
+							<SHORT-NAME>ERROR_OK</SHORT-NAME>
+							<ERROR-CODE>0</ERROR-CODE>
+						</APPLICATION-ERROR>
+
+						<APPLICATION-ERROR>
+							<SHORT-NAME>ERROR_NOT_OK</SHORT-NAME>
+							<ERROR-CODE>1</ERROR-CODE>
+						</APPLICATION-ERROR>
+					</POSSIBLE-ERRORS>
+				</CLIENT-SERVER-INTERFACE>
+			</ELEMENTS>
+		</AR-PACKAGE>
+
+
+		<AR-PACKAGE>
+			<SHORT-NAME>SWCs</SHORT-NAME>
+			<ELEMENTS>
+				<ECU-ABSTRACTION-SW-COMPONENT-TYPE>
+					<SHORT-NAME>SWC1_DoorLockIndecation</SHORT-NAME>
+
+					<PORTS>
+						<!-- provide port for door state -->
+						<P-PORT-PROTOTYPE>
+							<SHORT-NAME>ProvPort_SendRec_DoorState</SHORT-NAME>
+							<PROVIDED-INTERFACE-TREF
+								DEST="SENDER-RECEIVER-INTERFACE">/Interfaces/SendRecInterface_DoorState</PROVIDED-INTERFACE-TREF>
+						</P-PORT-PROTOTYPE>
+
+						<!-- provide port for Led -->
+						<P-PORT-PROTOTYPE>
+							<SHORT-NAME>ProvPort_ClServInterface_Led</SHORT-NAME>
+							<PROVIDED-INTERFACE-TREF
+								DEST="CLIENT-SERVER-INTERFACE">/Interfaces/ClServInterface_Led</PROVIDED-INTERFACE-TREF>
+						</P-PORT-PROTOTYPE>
+					</PORTS>
+
+					<INTERNAL-BEHAVIORS>
+						<SWC-INTERNAL-BEHAVIOR>
+							<SHORT-NAME>Beh_SWC1_DoorLockIndecation</SHORT-NAME>
+							<!-- We have 2 events(timing & operation invoked event -->
+							<EVENTS>
+								<!-- Call Run_ReadDoorSensor every 10ms -->
+								<TIMING-EVENT>
+									<SHORT-NAME>TimEvent_10ms</SHORT-NAME>
+									<START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/SWCs/SWC1_DoorLockIndecation/Beh_SWC1_DoorLockIndecation/Run_ReadDoorSensor</START-ON-EVENT-REF>
+									<PERIOD>0.01</PERIOD>
+								</TIMING-EVENT>
+
+								<!-- call led operation -->
+								<OPERATION-INVOKED-EVENT>
+									<SHORT-NAME>OperInvkEvent_Led</SHORT-NAME>
+									<START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/SWCs/SWC1_DoorLockIndecation/Beh_SWC1_DoorLockIndecation
+                                 /Run_Led</START-ON-EVENT-REF>
+									<OPERATION-IREF>
+										<CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/SWCs/SWC1_DoorLockIndecation/ProvPort_ClServInterface_Led</CONTEXT-P-PORT-REF>
+										<TARGET-PROVIDED-OPERATION-REF
+											DEST="CLIENT-SERVER-OPERATION">/Interfaces/ClServInterface_Led/Led</TARGET-PROVIDED-OPERATION-REF>
+									</OPERATION-IREF>
+								</OPERATION-INVOKED-EVENT>
+							</EVENTS>
+
+
+							<RUNNABLES>
+								<RUNNABLE-ENTITY>
+									<SHORT-NAME>Run_ReadDoorSensor</SHORT-NAME>
+									<MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+									<CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+
+									<!-- make Run_ReadDoorSensor access on DoorState in ProvPort_SendRec_DoorState -->
+									<DATA-WRITE-ACCESSS>
+										<VARIABLE-ACCESS>
+											<SHORT-NAME>DataAcc_DoorState</SHORT-NAME>
+											<ACCESSED-VARIABLE>
+												<AUTOSAR-VARIABLE-IREF>
+													<PORT-PROTOTYPE-REF
+														DEST="P-PORT-PROTOTYPE">/SWCs/SWC1_DoorLockIndecation/ProvPort_SendRec_DoorState</PORT-PROTOTYPE-REF>
+													<TARGET-DATA-PROTOTYPE-REF
+														DEST="VARIABLE-DATA-PROTOTYPE">/Interfaces/SendRecInterface_DoorState/DoorState</TARGET-DATA-PROTOTYPE-REF>
+												</AUTOSAR-VARIABLE-IREF>
+											</ACCESSED-VARIABLE>
+										</VARIABLE-ACCESS>
+									</DATA-WRITE-ACCESSS>
+									<SYMBOL>Run_ReadDoorSensor</SYMBOL>
+								</RUNNABLE-ENTITY>
+
+								<!-- define the second runnable in this SWC  define Run_Led -->
+								<RUNNABLE-ENTITY>
+									<SHORT-NAME>Run_Led</SHORT-NAME>
+									<MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+									<CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+									<SYMBOL>Run_Led</SYMBOL>
+								</RUNNABLE-ENTITY>
+						</SWC-INTERNAL-BEHAVIOR>
+					</RUNNABLES>
+					</INTERNAL-BEHAVIORS>
+				</ECU-ABSTRACTION-SW-COMPONENT-TYPE>
+
+
+				<!-- second SWC  SWC2_DoorLockIndecationAlgo - -->
+				<APPLICATION-SW-COMPONENT-TYPE>
+					<SHORT-NAME>SWC2_DoorLockIndecationAlgo</SHORT-NAME>
+					<PORTS>
+						<!-- provide port for door state -->
+						<R-PORT-PROTOTYPE>
+							<SHORT-NAME>ReqPort_SendRec_DoorState</SHORT-NAME>
+							<REQUIRED-INTERFACE-TREF
+								DEST="SENDER-RECEIVER-INTERFACE">/Interfaces/SendRecInterface_DoorState</REQUIRED-INTERFACE-TREF>
+						</R-PORT-PROTOTYPE>
+
+						<!-- client port for Led operation -->
+						<R-PORT-PROTOTYPE>
+							<SHORT-NAME>ReqPort_ClServInterface_Led</SHORT-NAME>
+							<REQUIRED-INTERFACE-TREF
+								DEST="CLIENT-SERVER-INTERFACE">/Interfaces/ClServInterface_Led</REQUIRED-INTERFACE-TREF>
+						</R-PORT-PROTOTYPE>
+					</PORTS>
+
+					<INTERNAL-BEHAVIORS>
+						<SWC-INTERNAL-BEHAVIOR>
+							<SHORT-NAME>Beh_SWC2_DoorLockIndecationAlgo</SHORT-NAME>
+							<!-- define timing event every 12ms activate Run_DoorLockAlgo to read 
+								door state from the ReqPort_SendRec_DoorState -->
+							<EVENTS>
+								<!-- Call Run_ReadDoorSensor every 12ms -->
+								<TIMING-EVENT>
+									<SHORT-NAME>TimEvent_12ms</SHORT-NAME>
+									<START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/SWCs/SWC2_DoorLockIndecationAlgo/Beh_SWC2_DoorLockIndecationAlgo/Run_DoorLockAlgo</START-ON-EVENT-REF>
+									<PERIOD>0.012</PERIOD>
+								</TIMING-EVENT>
+							</EVENTS>
+
+							<RUNNABLES>
+								<RUNNABLE-ENTITY>
+									<SHORT-NAME>Run_DoorLockAlgo</SHORT-NAME>
+									<MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+									<CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+
+									<!-- make Run_ReadDoorSensor access on DoorState in ProvPort_SendRec_DoorState -->
+									<DATA-READ-ACCESSS>
+										<VARIABLE-ACCESS>
+											<SHORT-NAME>DataAcc_DoorState</SHORT-NAME>
+											<ACCESSED-VARIABLE>
+												<AUTOSAR-VARIABLE-IREF>
+													<PORT-PROTOTYPE-REF
+														DEST="R-PORT-PROTOTYPE">/SWCs/SWC2_DoorLockIndecationAlgo/ReqPort_SendRec_DoorState</PORT-PROTOTYPE-REF>
+													<TARGET-DATA-PROTOTYPE-REF
+														DEST="VARIABLE-DATA-PROTOTYPE">/Interfaces/SendRecInterface_DoorState/DoorState</TARGET-DATA-PROTOTYPE-REF>
+												</AUTOSAR-VARIABLE-IREF>
+											</ACCESSED-VARIABLE>
+										</VARIABLE-ACCESS>
+									</DATA-READ-ACCESSS>
+
+									<!-- make Run_ReadDoorSensor access on Led operation in ClServInterface_Led -->
+									<SERVER-CALL-POINTS>
+										<SYNCHRONOUS-SERVER-CALL-POINT>
+											<SHORT-NAME>ServerCall</SHORT-NAME>
+											<OPERATION-IREF>
+												<CONTEXT-R-PORT-REF
+													DEST="R-PORT-PROTOTYPE">/SWCs/SWC2_DoorLockIndecationAlgo/ReqPort_ClServInterface_Led</CONTEXT-R-PORT-REF>
+												<TARGET-REQUIRED-OPERATION-REF
+													DEST="CLIENT-SERVER-OPERATION">/Interfaces/ClServInterface_Led</TARGET-REQUIRED-OPERATION-REF>
+											</OPERATION-IREF>
+										</SYNCHRONOUS-SERVER-CALL-POINT>
+									</SERVER-CALL-POINTS>
+									<SYMBOL>Run_DoorLockAlgo</SYMBOL>
+								</RUNNABLE-ENTITY>
+
+								<!-- define the second runnable in this SWC  define Run_Led -->
+								<RUNNABLE-ENTITY>
+									<SHORT-NAME>Run_Led</SHORT-NAME>
+									<MINIMUM-START-INTERVAL>0.0</MINIMUM-START-INTERVAL>
+									<CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+									<SYMBOL>Run_Led</SYMBOL>
+								</RUNNABLE-ENTITY>
+						</SWC-INTERNAL-BEHAVIOR>
+					</RUNNABLES>
+					</INTERNAL-BEHAVIORS>
+
+				</APPLICATION-SW-COMPONENT-TYPE>
+			</ELEMENTS>
+		</AR-PACKAGE>
+	</AR-PACKAGES>
+</AUTOSAR>
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+

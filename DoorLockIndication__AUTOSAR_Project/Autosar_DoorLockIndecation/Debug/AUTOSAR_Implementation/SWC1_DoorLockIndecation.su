@@ -1,0 +1,2 @@
+SWC1_DoorLockIndecation.c:16:6:Run_ReadDoorSensor	16	static
+SWC1_DoorLockIndecation.c:23:16:Run_Led	16	static
